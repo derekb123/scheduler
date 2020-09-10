@@ -5,6 +5,18 @@ import Appointment from "components/Appointment";
 import axios from "axios";
 import {getAppointmentsForDay, getInterview, getInterviewersForDay} from "helpers/selectors";
 
+const getSpotsDay = function(state, dayName) {
+  const foundDay = state.days.find((item) => item.name === dayName);
+  let daySpots = 0;
+  for (let appointmentId of foundDay.appointments) {
+    const appointment = state.appointments[appointmentId];
+    if (appointment.interview === null) {
+      daySpots ++;
+    }
+  }
+  return daySpots;
+}
+
 export default function useApplicationData() {
   
   const [state, setState] = useState({
@@ -43,23 +55,32 @@ export default function useApplicationData() {
       [id]: appointment
     };
 
-    const updateSpots = function(increment) {
-      const dayObj = state.days.find((item) => item.name = state.day)
-      dayObj.spots += increment;
-      return state.days;
-    }
+    // const updateSpots = function(increment) {
+    //   const dayObj = state.days.find((item) => item.name === state.day)
+    //   dayObj.spots += increment;
+    //   return state.days;
+    // }
 
+    const newState = {...state, appointments}
+    const newDays = newState.days.map((day) => {
+      return {...day, spots: getSpotsDay(newState, day.name)}
+    })
+
+    setState({...newState, days: newDays});
  
     return axios.put(`/api/appointments/${id}`, {interview})
     .then(() => {
-      const days = updateSpots(-1);
-      setState({...state, appointments, days });
+      return null;
+      // const days = updateSpots(-1);
+      // setState({...state, appointments, days });
     })
     .catch((err) => {
       console.log(err);
       return err;
     })
   }
+
+  
 
   function cancelInterview(id, interview) {
     // console.log('id', id, interview);
@@ -74,16 +95,26 @@ export default function useApplicationData() {
       [id]: appointment
     };
 
-    const updateSpots = function(increment) {
-      const dayObj = state.days.find((item) => item.name = state.day)
-      dayObj.spots += increment;
-      return state.days;
-    }
-    console.log('id', id, interview);
+    const newState = {...state, appointments}
+    const newDays = newState.days.map((day) => {
+      return {...day, spots: getSpotsDay(newState, day.name)}
+    })
+
+    setState({...newState, days: newDays});
+
+    // const updateSpots = function(increment) {
+    //   const dayObj = state.days.find((item) => item.name === state.day)
+    //   setState({...state, days})
+    //   dayObj.spots += increment;
+    //   return state.days;
+    // }
+
+
     return axios.delete(`/api/appointments/${id}`)
-    .then(() => {
-      const days = updateSpots(-1);
-      setState({...state, appointments, days });
+    .then((res) => {
+      return null;
+      // const days = updateSpots(1);
+      // setState({...state, appointments, days });
     })
     .catch((err) => {
       console.log(err);

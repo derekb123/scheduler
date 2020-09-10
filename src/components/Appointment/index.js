@@ -50,6 +50,25 @@ function onSave(name, interviewer) {
   });
 }
 
+function onEditSave(name, interviewer) {
+  const interview = {
+    student: name,
+    interviewer
+  };
+
+  transition(SAVING, true);
+
+  props.editInterview(props.id, interview)
+  .then((res) => {
+    if (!res) {
+      transition(SHOW);
+    } 
+    else {
+      transition(ERROR_SAVE, true);
+    }
+  });
+}
+
 function onDelete() {
   transition(CONFIRM);
 }
