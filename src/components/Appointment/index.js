@@ -21,6 +21,7 @@ const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
 const SAVING = "SAVING";
+const DELETING = "DELETING";
 const CONFIRM = "CONFIRM";
 const EDIT = "EDIT";
 const ERROR_SAVE = "ERROR_SAVE";
@@ -35,24 +36,19 @@ function onSave(name, interviewer) {
     student: name,
     interviewer
   };
-  transition(SAVING);
-  props.bookInterview(props.id, interview)
-  .then(() => transition(SHOW))
-    .catch(error => transition(ERROR_SAVE, true));
-}
 
-// function onDelete(name, interviewer) {
-//   const interview = {
-//     student: name,
-//     interviewer
-//   };
-//   console.log('interview', interview)
-//   transition(SAVING);
-//   props.bookInterview(props.id, interview)
-//   .then(() => {
-//     transition(SHOW);
-//   })
-// }
+  transition(SAVING, true);
+
+  props.bookInterview(props.id, interview)
+  .then((res) => {
+    if (!res) {
+      transition(SHOW);
+    } 
+    else {
+      transition(ERROR_SAVE, true);
+    }
+  });
+}
 
 function onDelete() {
   transition(CONFIRM);
@@ -63,17 +59,16 @@ function onEdit() {
 }
 
 function onConfirm(id) {
-  // const interview = {
-  //   student: name,
-  //   interviewer
-  // };
-  // console.log('interview', interview)
-  transition(SAVING);
+  transition(SAVING, true);
   props.cancelInterview(id)
-  .then(() => {
-    transition(EMPTY);
-  })
-  .catch(error => transition(ERROR_DELETE, true));
+  .then((res) => {
+    if (!res) {
+      transition(EMPTY);
+    } 
+    else {
+      transition(ERROR_DELETE, true);
+    }
+  });
 }
 
 console.log(props.interview);
@@ -83,8 +78,16 @@ console.log(props.interview);
       <Header time={props.time}/>
         {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
         {mode === SAVING && <Status/>}
-        {mode === ERROR_SAVE && <Error/>}
-        {mode === ERROR_DELETE && <Error/>}
+        {mode === ERROR_SAVE && (
+          <Error
+          onClose={() => back()}
+          />
+        )}
+        {mode === ERROR_DELETE && (
+          <Error
+          onClose={() => back()}
+          />
+        )}
         {mode === SHOW && (
           <Show
             student={props.interview.student}

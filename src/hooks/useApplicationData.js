@@ -43,25 +43,22 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment
     };
-    const selectedDay = state.days.filter((day, index) => {
-      if (day.name === state.day) {
-        day.spots -= 1
-        let arrDay = [day, index]
-        return arrDay
-      }
-    })
-    console.log("selectedDay:", selectedDay);
+
+    const updateSpots = function(increment) {
+      const dayObj = state.days.find((item) => item.name = state.day)
+      dayObj.spots += increment;
+      return state.days;
+    }
 
  
     return axios.put(`/api/appointments/${id}`, {interview})
-    .then((res) => {
-      setState({...state, appointments});
-    })
     .then(() => {
-      setState({...state.days[Number.selectedDay.id - 1], selectedDay })
+      const days = updateSpots(-1);
+      setState({...state, appointments, days });
     })
     .catch((err) => {
-      console.log(err)
+      console.log(err);
+      return err;
     })
   }
 
@@ -77,25 +74,24 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment
     };
-    const selectedDay = state.days.filter((day, index) => {
-      if (day.name === state.day) {
-        day.spots += 1
-        let arrDay = [day, index]
-        return arrDay
-      }
-    })
+
+    const updateSpots = function(increment) {
+      const dayObj = state.days.find((item) => item.name = state.day)
+      dayObj.spots += increment;
+      return state.days;
+    }
     console.log('id', id, interview);
     return axios.delete(`/api/appointments/${id}`)
-    .then((res) => {
-      setState({...state, appointments});
-    })
     .then(() => {
-      setState({...state.days[Number.selectedDay.id - 1], selectedDay })
+      const days = updateSpots(-1);
+      setState({...state, appointments, days });
     })
     .catch((err) => {
-      console.log(err)
+      console.log(err);
+      return err;
     })
-  }    
+  }
+
 
   return {state, setDay, bookInterview, cancelInterview}
 }
@@ -121,3 +117,11 @@ export default function useApplicationData() {
     //   ...state.day,
     //   spots: state.days[selectedDay].spots - 1
     // };
+
+      // const selectedDay = state.days.filter((day, index) => {
+    //   if (day.name === state.day) {
+    //     day.spots += 1
+    //     let arrDay = [day, index]
+    //     return arrDay
+    //   }
+    // })
