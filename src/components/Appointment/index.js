@@ -59,7 +59,7 @@ function onEdit() {
 }
 
 function onConfirm(id) {
-  transition(SAVING, true);
+  transition(DELETING, true);
   props.cancelInterview(id)
   .then((res) => {
     if (!res) {
@@ -71,13 +71,14 @@ function onConfirm(id) {
   });
 }
 
-console.log(props.interview);
+// console.log(props.interview);
 
   return (
-    <article className="appointment">
+    <article data-testid="appointment" className="appointment">
       <Header time={props.time}/>
         {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
-        {mode === SAVING && <Status/>}
+        {mode === SAVING && <Status message="Saving"/>}
+        {mode === DELETING && <Status message="Deleting"/>}
         {mode === ERROR_SAVE && (
           <Error
           onClose={() => back()}
@@ -122,7 +123,7 @@ console.log(props.interview);
             id={props.id}
           />
         )}
-
+        
     </article>
   )
 }
