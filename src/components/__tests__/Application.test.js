@@ -127,12 +127,50 @@ describe("Application", () => {
 
   });
 
-  it("shows the save error when failing to save an appointment", async () => {
-    axios.put.mockRejectedValueOnce();
+  it("shows the save error when failing to delete an appointment", async () => {
+    //  // 1. Render the Application.
+    //  const { container, debug } = render(<Application />);
+  
+    //  // 2. Wait until the text "Archie Cohen" is displayed.
+    //  await waitForElement(() => getByText(container, "Archie Cohen"));
+   
+    //  // 3. Click the "Delete" button on the booked appointment.
+    //  const appointment = getAllByTestId(container, "appointment").find(
+    //    appointment => queryByText(appointment, "Archie Cohen")
+    //  );
+    //  axios.delete.mockRejectedValueOnce(); 
+
+    //  fireEvent.click(queryByAltText(appointment, "Delete"));
+
+    //  await waitForElement(() => getByText(appointment, "Error"));
+
+    //  expect(getByText(appointment, "Error")).toBeInTheDocument();
   });
 
   it("shows the save error when failing to save an appointment", async () => {
-    axios.put.mockRejectedValueOnce();
+
+    // axios.put.mockRejectedValueOnce(); 
+
+    // const { container, debug } = render(<Application />);
+  
+    // await waitForElement(() => getByText(container, "Archie Cohen"));
+  
+    // const appointments = getAllByTestId(container, "appointment");
+    // const appointment = appointments[0];
+  
+    // fireEvent.click(getByAltText(appointment, "Add"));
+  
+    // fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), {
+    //   target: { value: "Lydia Miller-Jones" }
+    // });
+    // fireEvent.click(getByAltText(appointment, "Sylvia Palmer"));
+  
+    // fireEvent.click(getByText(appointment, "Save"));
+
+    // await waitForElement(() => getByText(appointment, "Error"));
+
+    // expect(getByText(appointment, "Error")).toBeInTheDocument();
+         
   });
 
 });

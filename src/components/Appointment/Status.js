@@ -1,5 +1,6 @@
 import React from "react";
 
+//Component to show status gif while doing asynch tasks
 export default function Status(props) {
 
   return (
@@ -11,5 +12,5 @@ export default function Status(props) {
     />
     <h1 className="text--semi-bold">{props.message}</h1>
   </main>
-  )
-}
+  );
+};

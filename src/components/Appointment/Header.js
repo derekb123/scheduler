@@ -2,7 +2,7 @@
 
 import React from "react";
 
-
+//Component for header element separating each appointment.
 export default function Header(props) {
 
   return(
@@ -10,5 +10,5 @@ export default function Header(props) {
   <h4 className="text--semi-bold">{props.time}</h4>
   <hr className="appointment__separator" />
   </header>
-  )
-} 
+  );
+};

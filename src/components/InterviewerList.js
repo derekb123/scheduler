@@ -4,9 +4,8 @@ import InterviewerListItem from "components/InterviewerListItem.js";
 import "components/InterviewerList.scss";
 import PropTypes from 'prop-types';
 
+//Shows list of interviewers to select from
 function InterviewerList(props) {
-  
-  
   const NewInterviewerListArr = props.interviewers.map(person =>
     <InterviewerListItem
       key={person.id}
@@ -18,15 +17,15 @@ function InterviewerList(props) {
     />
   )
   
-return (
-<div className="interviewers__list">
-  {NewInterviewerListArr}
-</div>
-)
-}
+    return (
+    <div className="interviewers__list">
+      {NewInterviewerListArr}
+    </div>
+    )
+  }
 
-InterviewerList.propTypes = {
-  interviewers: PropTypes.array.isRequired
+  InterviewerList.propTypes = {
+    interviewers: PropTypes.array.isRequired
 };
 
 export default InterviewerList;
