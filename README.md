@@ -1,5 +1,7 @@
 # Interview Scheduler
 
+An app to faciliate a student scheduling an interview appointment with an interviewer on a specific time and day of the week. 
+
 ## Setup
 
 Install dependencies with `npm install`.
@@ -21,3 +23,5 @@ npm test
 ```sh
 npm run storybook
 ```
+
+## Running Storybook Visual Testbed
