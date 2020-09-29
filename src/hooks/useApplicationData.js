@@ -31,8 +31,7 @@ export default function useApplicationData() {
 
   //Initialize all data from database into state
   useEffect(() => {
-    Promise.all([promise1, promise2, promise3
-    ])
+    Promise.all([promise1, promise2, promise3])
     .then((all) => {
     setState(prev => ({ ...prev, days: [...all[0].data], appointments: {...all[1].data}, interviewers: {...all[2].data}}));
   })
@@ -56,11 +55,10 @@ export default function useApplicationData() {
     const newDays = newState.days.map((day) => {
       return {...day, spots: getSpotsDay(newState, day.name)}
     })
-
-    setState({...newState, days: newDays});
  
     return axios.put(`/api/appointments/${id}`, {interview})
     .then(() => {
+      setState({...newState, days: newDays});
       return null;
     })
     .catch((err) => {
@@ -86,10 +84,9 @@ export default function useApplicationData() {
       return {...day, spots: getSpotsDay(newState, day.name)}
     })
 
-    setState({...newState, days: newDays});
-
     return axios.delete(`/api/appointments/${id}`)
     .then((res) => {
+      setState({...newState, days: newDays});
       return null;
     })
     .catch((err) => {
